@@ -955,6 +955,23 @@ module Formula = struct
     in
     go
 
+  let eval_cache srk alg =
+    Memo.lru_memo_recursive (fun go phi ->
+      match destruct srk phi with
+      | `Tru -> alg `Tru
+      | `Fls -> alg `Fls
+      | `Or disjuncts -> alg (`Or (List.map go disjuncts))
+      | `And conjuncts -> alg (`And (List.map go conjuncts))
+      | `Quantify (qt, name, typ, phi) ->
+        alg (`Quantify (qt, name, typ, go phi))
+      | `Not phi -> alg (`Not (go phi))
+      | `Atom (op, s, t) -> alg (`Atom (op, s, t))
+      | `Proposition p -> alg (`Proposition p)
+      | `Ite (cond, bthen, belse) ->
+        alg (`Ite (go cond, go bthen, go belse))
+      
+    )
+
   let pp = pp_expr
   let show ?(env=Env.empty) srk t = SrkUtil.mk_show (pp ~env srk) t
 

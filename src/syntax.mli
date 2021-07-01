@@ -388,6 +388,7 @@ module Formula : sig
   val destruct : 'a context -> 'a formula -> ('a formula, 'a) open_formula
   val eval : 'a context -> (('b, 'a) open_formula -> 'b) -> 'a formula -> 'b
   val eval_memo : 'a context -> (('b, 'a) open_formula -> 'b) -> 'a formula -> 'b
+  val eval_cache : 'a context -> (('b, 'a) open_formula -> 'b) -> 'a formula -> 'b
   val existential_closure : 'a context -> 'a formula -> 'a formula
   val universal_closure : 'a context -> 'a formula -> 'a formula
   val skolemize_free : 'a context -> 'a formula -> 'a formula

@@ -124,7 +124,7 @@ module CHC : sig
   val add : 'a solver -> ('a formula) list -> unit
 
   val check : 'a solver -> [ `Sat | `Unsat | `Unknown ]
-  val get_solution : 'a solver -> symbol -> 'a formula
+  val get_solution : 'a solver -> (symbol -> 'a formula)
 
   val to_string : 'a solver -> string
 end
